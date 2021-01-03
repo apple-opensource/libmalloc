@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Apple Inc. All rights reserved.
+ * Copyright (c) 2020 Apple Inc. All rights reserved.
  *
  * @APPLE_LICENSE_HEADER_START@
  *
@@ -21,47 +21,18 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-#ifndef __MAGAZINE_TESTING
-#define __MAGAZINE_TESTING
+#ifndef _PGUARD_MALLOC_H_
+#define _PGUARD_MALLOC_H_
 
-// Import the mvm_* functions for magazines to use
-#import "../src/vm.c"
+#include "base.h"
+#include "malloc/malloc.h"
 
-#import "../src/magazine_rack.c"
+MALLOC_NOEXPORT
+boolean_t
+pguard_enabled(void);
 
-bool
-malloc_tracing_enabled = false;
+MALLOC_NOEXPORT
+malloc_zone_t *
+pguard_create_zone(malloc_zone_t *wrapped_zone, unsigned debug_flags);
 
-int
-recirc_retained_regions = DEFAULT_RECIRC_RETAINED_REGIONS;
-
-// Stub out cross-file dependencies so that they just assert.
-void malloc_report(uint32_t flags, const char *fmt, ...)
-{
-	__builtin_trap();
-}
-
-void
-malloc_zone_error(uint32_t flags, bool is_corruption, const char *fmt, ...)
-{
-	__builtin_trap();
-}
-void
-malloc_zone_check_fail(const char *msg, const char *fmt, ...)
-{
-	__builtin_trap();
-}
-
-void
-szone_free(szone_t *szone, void *ptr)
-{
-	__builtin_trap();
-}
-
-void *
-szone_malloc(szone_t *szone, size_t size)
-{
-	__builtin_trap();
-}
-
-#endif // __MAGAZINE_TESTING
+#endif // _PGUARD_MALLOC_H_
