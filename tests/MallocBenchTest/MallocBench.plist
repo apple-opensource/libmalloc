@@ -33,9 +33,6 @@
 			<array>
 				<string>perf</string>
 			</array>
-			<!-- MallocBench is no longer representative of workloads that libmalloc is optimizing for. -->
-			<key>Disabled</key>
-			<true/>
 		</dict>
 	</array>
 </dict>
